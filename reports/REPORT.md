@@ -2,7 +2,7 @@
 
 **Họ tên / nhóm:** Nguyễn Việt Hoàng — MSV 2A202602424
 
-**Commit:** COMMIT_HASH_PLACEHOLDER
+**Commit:** `359ea8969f6c80093baf95bf2d09c3420fbfdf82`
 
 **Điểm tự động:** 84.0 / 88 (4 điểm còn lại là dữ liệu SLO ẩn, chỉ giảng viên chấm được).
 
