@@ -1,0 +1,75 @@
+seed: 25
+workload:
+  turns_per_s: 4.0
+  turn_deadline_s: 30
+  tool_exec_s: 0.3
+  steps:
+  - tool
+  - chat
+  base_malformed_rate: 0.0
+providers:
+- name: alpha
+  family: A-large
+  region: us
+  supports_tools: true
+  cost_per_call: 1.0
+  servers: 18
+  service_median_s: 1.2
+  max_queue_wait_s: 10
+  rate_limit_rps: 20
+- name: alpha-eu
+  family: A-large
+  region: eu
+  supports_tools: true
+  cost_per_call: 1.0
+  servers: 16
+  service_median_s: 1.5
+  max_queue_wait_s: 10
+  rate_limit_rps: 10
+- name: beta
+  family: B-large
+  region: us
+  supports_tools: true
+  cost_per_call: 1.4
+  servers: 30
+  service_median_s: 1.8
+  max_queue_wait_s: 10
+  rate_limit_rps: 16
+- name: gamma-mini
+  family: C-mini
+  region: us
+  supports_tools: false
+  cost_per_call: 0.2
+  servers: 40
+  service_median_s: 0.6
+  max_queue_wait_s: 10
+  rate_limit_rps: 30
+fallback_order:
+- alpha
+- alpha-eu
+- beta
+- gamma-mini
+client:
+  attempt_timeout_s: 8.0
+  max_attempts_per_provider: 2
+  min_time_left_s: 1.0
+  backoff_base_s: 0.25
+  backoff_cap_s: 4.0
+  retry_budget_ratio: 0.1
+  retry_budget_min_per_s: 0.5
+  retry_budget_max_tokens: 20
+  quota_cooldown_s: 300
+  breaker:
+    window_size: 20
+    min_calls: 10
+    failure_rate_threshold: 0.5
+    slow_call_s: 5.0
+    slow_rate_threshold: 0.6
+    open_duration_s: 10.0
+    half_open_max_probes: 2
+    half_open_successes: 2
+cache:
+  similarity_threshold: 0.8
+  ttl_s: 600
+  max_stale_s: 0
+  max_entries: 500
